@@ -1,0 +1,50 @@
+file = open('EventService(5).log', 'r') #Открытие файла в режиме чтения.
+result = open('Result_file.txt', 'w+') #Создание файла для записи данных.
+
+lines = file.read().splitlines() #Считывание всех строк файла.
+file.close() #Закрытие файла.
+
+n = len(lines)
+for i in range (n):
+    index = lines[i].find('Request for ')
+    if index != -1:
+        date = lines[i][:10]
+        time = lines[i][12:19]
+        #print(date)
+        #print(time)
+
+        #print(i, ':', index, '\n')
+        print(lines[i])
+        
+        X = lines[i][index+12:index+17] #12 = len(Request for ), 17 = len(Request for )+ len(X)
+        #print(X)
+        
+        index_for_Y_start = lines[i].find('_')
+        index_for_Y_end = lines[i][index+19:].find('_')
+        Y = lines[i][index_for_Y_start+1:index_for_Y_start+index_for_Y_end+2]
+        #print(Y)
+
+        Z = lines[i][index_for_Y_start+index_for_Y_end+3]
+        #print(Z)
+
+        
+
+        index_for_K = lines[i][::-1].find('_')
+        index_for_K = len(lines[i])-index_for_K
+        K = lines[i][index_for_K:]
+        #print(K)   
+
+        result.write(date)
+        result.write(', ')
+        result.write(time)
+        result.write(', ')
+        result.write(X)
+        result.write(', ')
+        result.write(Y)
+        result.write(', ')
+        result.write(Z)
+        result.write(', ')
+        result.write(K)
+        result.write('\n')
+
+result.close()
